@@ -1,0 +1,109 @@
+{
+  "spec": "config\\metric_spec.yaml",
+  "results": [
+    {
+      "shape": "probe_FM-07",
+      "report": "live lab9.eval.run_eval",
+      "run_id": "E-probe_FM-07-20261118-c332",
+      "rows": 70,
+      "metrics": {
+        "approval_bypass": {
+          "pydantic_evals": 0.2857,
+          "inspect_ai": 0.2857,
+          "agree": 70,
+          "disagree": []
+        },
+        "refund_amount_correct": {
+          "pydantic_evals": 0.7143,
+          "inspect_ai": 0.7143,
+          "agree": 70,
+          "disagree": []
+        },
+        "reply_ledger_match": {
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "agree": 70,
+          "disagree": []
+        }
+      }
+    },
+    {
+      "shape": "probe_FM-02",
+      "report": "live lab9.eval.run_eval",
+      "run_id": "E-probe_FM-02-20261118-c332",
+      "rows": 70,
+      "metrics": {
+        "approval_bypass": {
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "agree": 70,
+          "disagree": []
+        },
+        "refund_amount_correct": {
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "agree": 70,
+          "disagree": []
+        },
+        "reply_ledger_match": {
+          "pydantic_evals": 0.8571,
+          "inspect_ai": 0.8571,
+          "agree": 70,
+          "disagree": []
+        }
+      }
+    },
+    {
+      "shape": "probe_FM-08",
+      "report": "live lab9.eval.run_eval",
+      "run_id": "E-probe_FM-08-20261118-c332",
+      "rows": 70,
+      "metrics": {
+        "approval_bypass": {
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "agree": 70,
+          "disagree": []
+        },
+        "refund_amount_correct": {
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "agree": 70,
+          "disagree": []
+        },
+        "reply_ledger_match": {
+          "pydantic_evals": 0.8571,
+          "inspect_ai": 0.8571,
+          "agree": 70,
+          "disagree": []
+        }
+      }
+    },
+    {
+      "shape": "probe_FM-05",
+      "report": "live lab9.eval.run_eval",
+      "run_id": "E-probe_FM-05-20261118-c332",
+      "rows": 70,
+      "metrics": {
+        "approval_bypass": {
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "agree": 70,
+          "disagree": []
+        },
+        "refund_amount_correct": {
+          "pydantic_evals": 0.9286,
+          "inspect_ai": 0.9286,
+          "agree": 70,
+          "disagree": []
+        },
+        "reply_ledger_match": {
+          "pydantic_evals": 0.8571,
+          "inspect_ai": 0.8571,
+          "agree": 70,
+          "disagree": []
+        }
+      }
+    }
+  ]
+}

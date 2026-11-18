@@ -1,0 +1,161 @@
+{
+  "spec": "config/metric_spec_v2.yaml",
+  "results": [
+    {
+      "shape": "swarm",
+      "report": "reports\\baseline_v2.json",
+      "run_id": "E-swarm-20261118-17c5",
+      "rows": 140,
+      "metrics": {
+        "approval_bypass": {
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "agree": 140,
+          "disagree": []
+        },
+        "refund_amount_correct": {
+          "pydantic_evals": 0.9786,
+          "inspect_ai": 0.9786,
+          "agree": 140,
+          "disagree": []
+        },
+        "reply_ledger_match": {
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "agree": 140,
+          "disagree": []
+        }
+      }
+    },
+    {
+      "shape": "fixed",
+      "report": "reports\\eval_v2_fixed.json",
+      "run_id": "E-fixed-20261118-17c5",
+      "rows": 140,
+      "metrics": {
+        "approval_bypass": {
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "agree": 140,
+          "disagree": []
+        },
+        "refund_amount_correct": {
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "agree": 140,
+          "disagree": []
+        },
+        "reply_ledger_match": {
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "agree": 140,
+          "disagree": []
+        }
+      }
+    },
+    {
+      "shape": "honest_refactor",
+      "report": "reports\\eval_v2_honest_refactor.json",
+      "run_id": "E-honest_refactor-20261118-17c5",
+      "rows": 140,
+      "metrics": {
+        "approval_bypass": {
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "agree": 140,
+          "disagree": []
+        },
+        "refund_amount_correct": {
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "agree": 140,
+          "disagree": []
+        },
+        "reply_ledger_match": {
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "agree": 140,
+          "disagree": []
+        }
+      }
+    },
+    {
+      "shape": "seeded_regression",
+      "report": "reports\\eval_v2_seeded_regression.json",
+      "run_id": "E-seeded_regression-20261118-17c5",
+      "rows": 140,
+      "metrics": {
+        "approval_bypass": {
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "agree": 140,
+          "disagree": []
+        },
+        "refund_amount_correct": {
+          "pydantic_evals": 0.7857,
+          "inspect_ai": 0.7857,
+          "agree": 140,
+          "disagree": []
+        },
+        "reply_ledger_match": {
+          "pydantic_evals": 0.7143,
+          "inspect_ai": 0.7143,
+          "agree": 140,
+          "disagree": []
+        }
+      }
+    },
+    {
+      "shape": "slice_regression",
+      "report": "reports\\eval_slice_regression.json",
+      "run_id": "E-slice_regression-20261118-17c5",
+      "rows": 140,
+      "metrics": {
+        "approval_bypass": {
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "agree": 140,
+          "disagree": []
+        },
+        "refund_amount_correct": {
+          "pydantic_evals": 0.9357,
+          "inspect_ai": 0.9357,
+          "agree": 140,
+          "disagree": []
+        },
+        "reply_ledger_match": {
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "agree": 140,
+          "disagree": []
+        }
+      }
+    },
+    {
+      "shape": "flaky_regression",
+      "report": "reports\\eval_v2_flaky_regression.json",
+      "run_id": "E-flaky_regression-20261118-17c5",
+      "rows": 140,
+      "metrics": {
+        "approval_bypass": {
+          "pydantic_evals": 0.0,
+          "inspect_ai": 0.0,
+          "agree": 140,
+          "disagree": []
+        },
+        "refund_amount_correct": {
+          "pydantic_evals": 0.9643,
+          "inspect_ai": 0.9643,
+          "agree": 140,
+          "disagree": []
+        },
+        "reply_ledger_match": {
+          "pydantic_evals": 1.0,
+          "inspect_ai": 1.0,
+          "agree": 140,
+          "disagree": []
+        }
+      }
+    }
+  ]
+}
