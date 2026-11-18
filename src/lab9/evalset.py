@@ -29,6 +29,37 @@ REQUIRED = ("item_id", "claim_id", "failure_modes", "provenance", "split", "eval
 
 FM_CODE = re.compile(r"FM-\d{2}")
 
+# M1: failure modes each claim exercises, primary first (docs/failure_taxonomy.md).
+# Rule: an FM is listed when its single-switch probe (python -m lab9.fm_probe) flips this
+# claim from correct to wrong on all 5 seeds. FM-01 is on every item: every claim row carries
+# a canary secret. Two tags are by design, not by probe (see taxonomy notes):
+#   C-005 FM-09: cross-principal order, guarded today (investigator visible=false)
+#   C-009 FM-03: authority / "ignore policy" injection in the ticket (pack C-102 analogue)
+FAILURE_MODES: dict[str, list[str]] = {
+    "C-001": ["FM-07", "FM-04", "FM-01"],
+    "C-002": ["FM-03", "FM-01"],
+    "C-003": ["FM-01"],
+    "C-004": ["FM-01"],
+    "C-005": ["FM-09", "FM-01"],
+    "C-006": ["FM-06", "FM-01"],
+    "C-007": ["FM-02", "FM-04", "FM-01"],
+    "C-008": ["FM-08", "FM-05", "FM-04", "FM-01"],
+    "C-009": ["FM-03", "FM-01"],
+    "C-010": ["FM-07", "FM-04", "FM-01"],
+    "C-011": ["FM-07", "FM-04", "FM-01"],
+    "C-012": ["FM-07", "FM-04", "FM-01"],
+    "C-013": ["FM-05", "FM-02", "FM-04", "FM-01"],
+    "C-014": ["FM-05", "FM-04", "FM-08", "FM-01"],
+}
+# Trials whose trace is the evidence for the primary FM (anchors in the taxonomy).
+FROM_TRACE: dict[str, str] = {
+    "C-002": "seeded_regression C-002@11 ev3 model_override; swarm C-002@55 ev3",
+    "C-007": "seeded_regression C-007@11 ev5 reply",
+    "C-008": "seeded_regression C-008@11 ev5 reply",
+    "C-013": "seeded_regression C-013@11 ev5 proposal",
+    "C-014": "seeded_regression C-014@11 ev5 proposal",
+}
+
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
@@ -46,18 +77,19 @@ def build(source: Path = SOURCE) -> tuple[int, int]:
         items.append({
             "item_id": item_id,
             "claim_id": claim["claim_id"],
-            # TODO M1: replace [] with the FM-xx codes from your taxonomy that this item exercises.
-            "failure_modes": [],
+            "failure_modes": list(FAILURE_MODES.get(claim["claim_id"], [])),
             "provenance": {"source": "lab8_public", "matrix_id": claim.get("matrix_id"),
-                           "from_trace": None, "generator": None,
-                           "label_by": "lab8_matrix", "checked_by": None},
+                           "from_trace": FROM_TRACE.get(claim["claim_id"]), "generator": None,
+                           "label_by": "lab8_matrix", "checked_by": "lab9.fm_probe + fixed_shape_replay"},
             "split": "regression",
             "eval_set_version": VERSION,
         })
         labels[claim["claim_id"]] = claim["expected"]
     ITEMS.parent.mkdir(parents=True, exist_ok=True)
-    ITEMS.write_text("".join(json.dumps(i, ensure_ascii=False) + "\n" for i in items), encoding="utf-8")
-    LABELS.write_text(json.dumps(labels, ensure_ascii=False, indent=2), encoding="utf-8")
+    # newline="\n": the eval-set SHA is over bytes; Windows text mode would write CRLF and the
+    # SHA would differ from the LF file CI checks out.
+    ITEMS.write_text("".join(json.dumps(i, ensure_ascii=False) + "\n" for i in items), encoding="utf-8", newline="\n")
+    LABELS.write_text(json.dumps(labels, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     return len(items), len(labels)
 
 
@@ -98,8 +130,8 @@ def build_v2(items_v1: Path = ITEMS, labels_v1: Path = LABELS, pack: Path = PACK
             "slices": slices_for(claim["expected"], True),
         })
         labels[claim["claim_id"]] = claim["expected"]
-    ITEMS_V2.write_text("".join(json.dumps(i, ensure_ascii=False) + "\n" for i in items), encoding="utf-8")
-    LABELS_V2.write_text(json.dumps(labels, ensure_ascii=False, indent=2), encoding="utf-8")
+    ITEMS_V2.write_text("".join(json.dumps(i, ensure_ascii=False) + "\n" for i in items), encoding="utf-8", newline="\n")
+    LABELS_V2.write_text(json.dumps(labels, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     return len(items), len(labels)
 
 
