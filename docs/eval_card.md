@@ -2,8 +2,8 @@
 
 Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi số liệu dưới đây lấy từ report do script sinh ra (`src/reports/*.json`, commit bằng `git add -f`), không gõ tay.
 
-- **Run ID / eval set SHA:** baseline v1 `E-swarm-20261118-81ae`, eval set v1 sha `81aec280c39b`; baseline v2 `E-swarm-20261118-014c`, eval set v2 sha `014c39b63f85`.
-- **Phiên bản:** code Lab 8 = `K5-Day8-From-Workflows-to-Agents@034c6c4` (không sửa `src/lab8/`) · code Lab 9 + grader = `starter/d09@61481ba` · eval set v1 (`81aec280c39b`) · metric_spec `1.0` · seeds 11/22/33/44/55 · MockLLM · Python 3.12.10 (CI: 3.13).
+- **Run ID / eval set SHA:** baseline v1 `E-swarm-20261118-c332`, eval set v1 sha `c3321703d114`; baseline v2 `E-swarm-20261118-17c5`, eval set v2 sha `17c5cb3139f2`.
+- **Phiên bản:** code Lab 8 = `K5-Day8-From-Workflows-to-Agents@034c6c4` (không sửa `src/lab8/`) · code Lab 9 + grader = `starter/d09@61481ba` (+ sửa EOL của eval set: ghi LF để SHA trên Windows khớp CI) · eval set v1 (`c3321703d114`) · metric_spec `1.0` · seeds 11/22/33/44/55 · MockLLM · Python 3.12.10 (CI: 3.13).
 - **Eval set:** v1, 14 item × 5 seed = 70 trial. Nguồn `lab8_public` (ma trận T01–T14). Nhãn ở `labels_v1.json`, tách khỏi item. Mỗi item có `failure_modes` (FM-01…FM-09) theo quy tắc probe một công tắc (`python -m lab9.fm_probe`), xem `docs/failure_taxonomy.md`.
 - **Metric & ngưỡng** (`config/metric_spec.yaml`):
 
@@ -22,9 +22,9 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi s�
 
   | Shape (run ID) | pass_rate | refund_amount_correct | reply_ledger_match | Δ pass_rate [CI] | Gate |
   |---|---|---|---|---|---|
-  | swarm (`E-swarm-20261118-81ae`) baseline | 0.9857 | 0.9857 | 1.0 | — | — |
-  | fixed (`E-fixed-20261118-81ae`) | 1.0 | 1.0 | 1.0 | +0.014 [+0.000, +0.043] | **exit 0 merge** |
-  | seeded_regression (`E-seeded_regression-20261118-81ae`) | 0.7143 | 0.8571 | 0.7857 | **−0.271 [−0.500, −0.057]** | **exit 1**: `refund_amount_correct, pass_rate, reply_ledger_match` |
+  | swarm (`E-swarm-20261118-c332`) baseline | 0.9857 | 0.9857 | 1.0 | — | — |
+  | fixed (`E-fixed-20261118-c332`) | 1.0 | 1.0 | 1.0 | +0.014 [+0.000, +0.043] | **exit 0 merge** |
+  | seeded_regression (`E-seeded_regression-20261118-c332`) | 0.7143 | 0.8571 | 0.7857 | **−0.271 [−0.500, −0.057]** | **exit 1**: `refund_amount_correct, pass_rate, reply_ledger_match` |
 
   Grader detection (`python -m lab9.mutation --detect`): **100%** trace lỗi của `seeded_regression` được ít nhất một grader khác ngoài `pass_rate` giải thích, **0%** báo nhầm trên `fixed`.
 - **Judge** (`docs/judge_audit.md`): tone_ok κ = 0.757, P = 0.857, R = 0.80, đạt sàn nên dùng để theo dõi, không blocking. **helpful bị loại**: κ = 0.375, R = 0.30, có 21 FN trên 30 FAIL, trong đó 18 FN là reply nói sai số tiền so với ledger (judge không thấy ledger). Phần "đúng tiền" được thay bằng code grader `reply_ledger_match`.
@@ -42,7 +42,7 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi s�
 
 ## v2 (M5–M7): slice, nhiễu, chống gian lận eval
 
-- **Eval set v2:** 28 item = 14 item v1 + 14 claim adversarial (`adversarial_v2.json`); sha `014c39b63f85`. `config/fm_map.yaml` map mỗi cơ chế tấn công sang một mã FM. Mỗi FM bị tấn công có ≥ 3 item; `python -m lab9.evalset --v2` báo 0 problem.
+- **Eval set v2:** 28 item = 14 item v1 + 14 claim adversarial (`adversarial_v2.json`); sha `17c5cb3139f2`. `config/fm_map.yaml` map mỗi cơ chế tấn công sang một mã FM. Mỗi FM bị tấn công có ≥ 3 item; `python -m lab9.evalset --v2` báo 0 problem.
 - **Spec v2** (`config/metric_spec_v2.yaml`), ngoài các metric v1 (FM-08 mang sang, `refund_amount_correct` min 0.90):
   - `pass_hat_5` blocking, min **0.85**.
   - Slice `money_movement` (12 item) trên `pass_rate` và `refund_amount_correct`, min 0.90, không giảm có ý nghĩa, blocking.
@@ -53,11 +53,11 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi s�
 
   | Variant (run ID) | Trung bình pass_rate, Δ [CI] | Bị chặn bởi | Kỳ vọng |
   |---|---|---|---|
-  | fixed (`E-fixed-20261118-014c`) | 1.0 | — | merge ✔ |
-  | honest_refactor (`E-honest_refactor-20261118-014c`) | 1.0, +0.021 [+0.000, +0.043] | — (cost_per_success +13.6% chỉ `warn`) | merge ✔ |
+  | fixed (`E-fixed-20261118-17c5`) | 1.0 | — | merge ✔ |
+  | honest_refactor (`E-honest_refactor-20261118-17c5`) | 1.0, +0.021 [+0.000, +0.043] | — (cost_per_success +13.6% chỉ `warn`) | merge ✔ |
   | seeded_regression | 0.6429 | mọi metric năng lực + 4 slice | block ✔ |
-  | slice_regression (`E-slice_regression-20261118-014c`) | **0.9357, −0.043 [−0.121, +0.029]**: trên sàn, CI chạm 0 | **chỉ** `slice:money_movement` (0.85 < 0.90, Δ −0.150 [−0.300, +0.000]) | block ✔ |
-  | flaky_regression (`E-flaky_regression-20261118-014c`) | 0.9143, −0.064 [−0.114, −0.014] | **`pass_hat_5` 0.5714** + pass_rate + `money_movement` | block ✔ |
+  | slice_regression (`E-slice_regression-20261118-17c5`) | **0.9357, −0.043 [−0.121, +0.029]**: trên sàn, CI chạm 0 | **chỉ** `slice:money_movement` (0.85 < 0.90, Δ −0.150 [−0.300, +0.000]) | block ✔ |
+  | flaky_regression (`E-flaky_regression-20261118-17c5`) | 0.9143, −0.064 [−0.114, −0.014] | **`pass_hat_5` 0.5714** + pass_rate + `money_movement` | block ✔ |
 
   Scorecard `python -m lab9.mutation --spec config/metric_spec_v2.yaml --baseline reports/baseline_v2.json`: **mutation score 3/3 · false alarms 0**.
   Thử thêm ngoài variant công khai (probe một công tắc, `lab9.variant_agent.make_shape`):

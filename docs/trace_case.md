@@ -33,7 +33,7 @@ python -m lab9.trace_case --shape fixed --claim C-008 --seed 11
 
 | Trường | Nội dung |
 |---|---|
-| Trial | `seeded_regression C-008@11`, row `E-008@11` trong report `E-seeded_regression-20261118-81ae` (`reports/eval_seeded_regression.json`) |
+| Trial | `seeded_regression C-008@11`, row `E-008@11` trong report `E-seeded_regression-20261118-c332` (`reports/eval_seeded_regression.json`) |
 | Triệu chứng | Grader Lab 8 **PASS** (`ok`) và `refund_amount_correct` cũng pass vì ledger 20.000 = label 20.000. Chỉ `reply_ledger_match` fail: reply nói **"Dạ, LogiX đã hoàn 35.000đ cho đơn O-808."** nhưng ledger chỉ có **20.000đ**. Khách được hứa nhiều hơn 15.000đ so với số thực nhận. |
 | Bước sai đầu tiên | **Event 5 `reply`**: `{"text": "Dạ, LogiX đã hoàn 35.000đ cho đơn O-808."}` |
 | Vì sao là bước *đầu tiên* | Ev1 `handoff` đúng allowlist; ev2 `investigator` đọc O-808 `delay_days: 4` từ DB, không có override; ev3 `quote` 35.000 (`SHIP-LATE-03`), đúng `proposal_amount` của label; ev4 `refund_history` 0/0, đúng vì đơn chưa từng hoàn. Host ghi 20.000 do trần approval A-008 (`approved_vnd: 20000`). Đây là quyết định đúng của host, không phải của agent. Agent sai ở ev5: báo lại số mình đề xuất, không phải số host đã ghi (`effect.amount_vnd`). |
