@@ -1,0 +1,2 @@
+# Bonus only (lab9.inspect_port). CI installs requirements.txt + requirements-lab9.txt, not this file.
+inspect-ai==0.3.291
